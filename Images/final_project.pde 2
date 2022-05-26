@@ -1,0 +1,95 @@
+int score;
+int lives;
+Car c1, c2;
+Log l1;
+Frog f1;
+
+void setup() {
+  size(500, 800);
+  score = 0;
+  lives = 4;
+  c1 = new Car(200, 430);
+  c2 = new Car(15, 330);
+  l1 = new Log(20, 500);
+  f1 = new Frog(300, 715);
+}
+
+void draw() {
+  background(0, 77, 0);
+  drawBG();
+  scorePanel();
+  c1.display();
+  c1.move();
+  c2.display();
+  c2.move();
+  l1.display();
+  l1.move();
+  f1.display();
+  if (dist(f1.x, f1.y, c1.x, c1.y)<20) {
+    f1.x = 300;
+    f1.y = 700;
+    lives = lives-1 ;
+  }
+  if (dist(f1.x, f1.y, c2.x, c2.y)<20) {
+    f1.x = 300;
+    f1.y = 700;
+    lives = lives-1 ;
+  }
+  if (lives <1) {
+    fill(0);
+    rectMode(CORNER);
+    rect(0, 0, width, height);
+    fill(255);
+    text("GAME OVER", 200, 500);
+    text("Your Score Was:" + score, 200, 550);
+    noLoop();
+  }
+  if (f1.y<80) {
+    score = score +100;
+    f1.x = 300;
+    f1.y = 700;
+  }
+}
+void keyPressed() {
+  if (key==CODED) {
+    if (keyCode==UP) {
+      f1.move('w');
+    } else if (keyCode==DOWN) {
+      f1.move('s');
+    } else if (keyCode==RIGHT) {
+      f1.move('d');
+    } else if (keyCode==LEFT) {
+      f1.move('a');
+    }
+  }
+}
+
+void scorePanel() {
+  fill(127, 127);
+  rect(0, 0, width, 30);
+  fill(255);
+  text("Score:" + score + "Lives:" + lives, 10, 25);
+}
+
+void drawBG() {
+  fill(#BEE8FF);
+  rect(-10, -10, 600, 310);
+  noStroke();
+  fill(#FFFFFF);
+  circle(80,130,60);
+  circle(115,150,60);
+  circle(40,160,60);
+  circle(80,178,60);
+  circle(260,25,60);
+  circle(230,10,60);
+  circle(278,8,60);
+  circle(389,170,60);
+  circle(425,190,60);
+  circle(365,194,60);
+  circle(389,208,60);//draws clouds
+  fill(#546670);
+  rect(-10, 400, 550, 60);
+  rect(-10, 300, 550, 60);
+  fill(#56A3FA);
+  rect(-10, 480, 600, 80);
+}
